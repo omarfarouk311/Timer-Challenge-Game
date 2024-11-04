@@ -1,5 +1,6 @@
 import styles from "./ResultModal.module.css";
 import { forwardRef, useRef, useImperativeHandle } from "react";
+import { createPortal } from "react-dom";
 
 const ResultModal = forwardRef(
   ({ targetTime, remainingTime, handleReset }, ref) => {
@@ -18,7 +19,7 @@ const ResultModal = forwardRef(
     const hasWon = remainingTime > 0;
     const score = Math.round((1 - remainingTime / targetTime) * 100);
 
-    return (
+    return createPortal(
       <dialog
         className={styles["result-modal"]}
         ref={dialog}
@@ -43,7 +44,8 @@ const ResultModal = forwardRef(
         <form method="dialog">
           <button>Close</button>
         </form>
-      </dialog>
+      </dialog>,
+      document.getElementById("modal")
     );
   }
 );
